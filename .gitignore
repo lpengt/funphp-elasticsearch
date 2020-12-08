@@ -1,0 +1,14 @@
+.buildpath
+.settings/
+.project
+.git/
+runtime/
+vendor/
+temp/
+*.lock
+.env
+.DS_Store
+
+.phpunit.result.cache
+.idea/
+.vscode/
