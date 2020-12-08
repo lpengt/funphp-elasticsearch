@@ -1,0 +1,24 @@
+{
+	"name": "funphp/elasticsearch",
+	"description": "An elasticsearch tool",
+	"authors": [
+		{
+			"name": "lpengt",
+			"email": "kiratst@163.com"
+		}
+	],
+	"require": {
+		"php": ">7.2",
+		"elasticsearch/elasticsearch": "~7.8",
+		"funphp/utils": "~1.0"
+	}
+	,
+	"require-dev": {
+		"roave/security-advisories": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Funphp\\Elasticsearch\\": "src/"
+		}
+	}
+}
