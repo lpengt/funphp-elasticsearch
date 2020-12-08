@@ -46,38 +46,36 @@ self::indexCreateBuilder()->create();
 <?php
 namespace Start;
 
+use Funphp\Elasticsearch\Common\Mappings;
 use Funphp\Elasticsearch\Search\Searchable;
 use Funphp\Elasticsearch\Common\Settings\Settings;
 
 class User
 {
-	use Searchable;
-	
-	public function searchableIndex(): string
-	{
-		return 'index-user';
-	}
-	
+    use Searchable;
+    
+    public function searchableIndex(): string
+    {
+        return 'index-user';
+    }
+    
     public function createIndex()
-	{
-		$request = self::indexCreateBuilder()
-			->setting(Settings::builder()
-				->setting('number_of_shards', 3)
-				->setting('number_of_replicas', 2)
-			)->mappings([
-				'properties' => [
-					'date' => [
-						'type'   => 'date',
-						'format' => 'yyyy-MM-dd HH:mm:ss',
-					],
-					'name' => [
-						'type' => 'text',
-					],
-				],
-			]);
-
-		return $request->create();
-	}
+    {
+        self::indexCreateBuilder()
+            ->setting(Settings::builder()
+                ->setting('number_of_shards', 3)
+                ->setting('number_of_replicas', 2)
+            )->mappings(Mappings::builder()
+                ->mappings('properties', [
+                    'login_at' => [
+                        'type'   => 'date',
+                        'format' => 'yyyy-MM-dd HH:mm:ss',
+                    ],
+                    'name'     => [
+                        'type' => 'text',
+                    ]
+                ]))->create();
+    }
 
 }
 ```
@@ -92,11 +90,10 @@ return self::indexDeleteBuilder()->delete();
 ### 新增一个文档
 
 ```php
-self::documentCreateBuilder()
-    ->create([
-        'date' => date('Y-m-d H:i:s'),
-        'name' => 'test-name',
-    ]);
+self::documentCreateBuilder()->create([
+    'date' => date('Y-m-d H:i:s'),
+    'name' => 'test-name',
+]);
 
 ```
 这种方式会随机生成一个`id`, 如果你想指定`id`,可以调用`id($id)`方法:
@@ -138,16 +135,16 @@ self::documentQueryBuilder()
 
 ```php
 self::documentQueryBuilder()
-	->match('name', '乌拉')
-	->search();
+    ->match('name', '乌拉')
+    ->search();
 ```
 
 - `ids`
 
 ```php
 self::documentQueryBuilder()
-	->ids([1, 2])
-	->search();
+    ->ids([1, 2])
+    ->search();
 ```
 
 - `range`
@@ -163,30 +160,30 @@ self::documentQueryBuilder()
 
     ```php
     self::documentQueryBuilder()
-    	->bool(function (BoolBuilder $builder) {
-    		$builder->must(function (Builder $builder) {
-    			$builder->range('login_at', '>=', '2020-10-01 00:00:00');
-    		})->must(function (Builder $builder) {
-    			$builder->range('age', '>=', 12)
-    				->range('age', '<=', 15);
-    		});
-    	})
-    	->sortByDesc('age')
-    	->search();
+        ->bool(function (BoolBuilder $builder) {
+            $builder->must(function (Builder $builder) {
+                $builder->range('login_at', '>=', '2020-10-01 00:00:00');
+            })->must(function (Builder $builder) {
+                $builder->range('age', '>=', 12)
+                    ->range('age', '<=', 15);
+            });
+        })
+        ->sortByDesc('age')
+        ->search();
     ```
 
     - `must_not`
     
     ```php
     self::documentQueryBuilder()
-		->bool(function (BoolBuilder $builder) {
-			$builder->mustNot(function (Builder $builder) {
-				$builder->exists('login_at');
-			});
-	})
-	->sortByDesc('age')
-	->source(['id', 'name', 'age'])
-	->search();
+        ->bool(function (BoolBuilder $builder) {
+            $builder->mustNot(function (Builder $builder) {
+                $builder->exists('login_at');
+            });
+    })
+    ->sortByDesc('age')
+    ->source(['id', 'name', 'age'])
+    ->search();
     ```
     
     - `filter` `should`用法与`must`相同
@@ -200,11 +197,11 @@ self::documentQueryBuilder()
 
 ```php
 self::documentUpdateBuilder()
-	->id('test-id')
-	->update([
-		'date' => date('Y-m-d H:i:s'),
-		'name' => 'test-update_point'
-	]);
+    ->id('test-id')
+    ->update([
+        'date' => date('Y-m-d H:i:s'),
+        'name' => 'test-update_point'
+    ]);
 ```
 
 ### 删除文档
