@@ -9,6 +9,7 @@ use Funphp\Elasticsearch\Document\Base\BaseRequest;
 /**
  * @property int $from
  * @property int $size
+ * @property string $scroll
  */
 class Request extends BaseRequest
 {
@@ -30,6 +31,17 @@ class Request extends BaseRequest
 	public function size(int $size): self
 	{
 		$this->size = $size;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $scroll
+	 * @return $this
+	 */
+	public function scroll(string $scroll = '1m'): self
+	{
+		$this->scroll = $scroll;
 
 		return $this;
 	}

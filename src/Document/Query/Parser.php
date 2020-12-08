@@ -14,10 +14,10 @@ class Parser extends BaseParser
 		$this->request = $request;
 		$this->builder = $this->request->builder;
 
-		return [
+		return array_merge([
 			'body'  => $this->parseBody(),
 			'index' => $this->request->index,
-		];
+		], $this->parseScroll());
 	}
 
 	/**
@@ -65,13 +65,9 @@ class Parser extends BaseParser
 
 	protected function parseFrom(): array
 	{
-		if (!$this->request->from) {
-			return [];
-		}
-
-		return [
+		return $this->request->from ? [
 			'from' => $this->request->from,
-		];
+		] : [];
 	}
 
 	protected function parseSize(): array
@@ -79,6 +75,13 @@ class Parser extends BaseParser
 		return [
 			'size' => $this->request->size ?? 10,
 		];
+	}
+
+	protected function parseScroll()
+	{
+		return $this->request->scroll ? [
+			'scroll' => $this->request->scroll ?? '1m',
+		] : [];
 	}
 
 }
