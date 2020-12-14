@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Common\Settings;
 
-
-use Funphp\Elasticsearch\Document\Builders\BuilderInterface;
+use Funphp\Elasticsearch\Builder\BuilderInterface;
 
 class Settings implements BuilderInterface
 {
@@ -22,7 +22,7 @@ class Settings implements BuilderInterface
 	}
 
 	/**
-	 * @param string $key
+	 * @param string       $key
 	 * @param string|mixed $value
 	 * @return $this
 	 */
@@ -40,7 +40,7 @@ class Settings implements BuilderInterface
 		}
 
 		return [
-			'settings' => $this->settings
+			'settings' => $this->settings,
 		];
 	}
 }
