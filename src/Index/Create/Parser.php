@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Index\Create;
 
@@ -24,7 +25,7 @@ class Parser implements ParserInterface
 
 		return [
 			'index' => $request->index,
-			'body' => $this->parseBuilders(),
+			'body'  => $this->parseBuilders(),
 		];
 	}
 
@@ -50,28 +51,4 @@ class Parser implements ParserInterface
 
 		return $data;
 	}
-
-	private function setting()
-	{
-		/** @var Settings $settings */
-		$settings = $this->request->settings;
-		if (!$settings) {
-			return [];
-		}
-
-		return $settings->format();
-	}
-
-	private function mappings()
-	{
-		$mappings = $this->request->mappings;
-		if (!$mappings) {
-			return [];
-		}
-
-		return [
-			'mappings' => $mappings,
-		];
-	}
-
 }

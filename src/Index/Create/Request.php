@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Index\Create;
 
@@ -15,15 +16,6 @@ class Request extends AbstractRequest
 	 * @var array|BuilderInterface[] $builders
 	 */
 	protected $builders = [];
-	/**
-	 * @var Settings
-	 */
-	protected $settings;
-
-	/**
-	 * @var array
-	 */
-	protected $mappings = [];
 
 	/**
 	 * @param Settings $settings
@@ -31,8 +23,6 @@ class Request extends AbstractRequest
 	 */
 	public function setting(Settings $settings): Request
 	{
-		$this->settings = $settings;
-
 		$this->builders[] = $settings;
 
 		return $this;
@@ -44,23 +34,10 @@ class Request extends AbstractRequest
 	 */
 	public function mappings(Mappings $mappings): Request
 	{
-		$this->mappings = $mappings;
-
 		$this->builders[] = $mappings;
 
 		return $this;
 	}
-
-	// /**
-	//  * @param array $mappings
-	//  * @return $this
-	//  */
-	// public function mappings(array $mappings = []): Request
-	// {
-	// 	$this->mappings = $mappings;
-	//
-	// 	return $this;
-	// }
 
 	/**s
 	 * @param string $index

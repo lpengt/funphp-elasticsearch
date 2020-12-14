@@ -58,6 +58,10 @@ class Client
 		return $this->client->updateByQuery($params);
 	}
 
+	/**
+	 * @param array $params
+	 * @return array|callable
+	 */
 	public function deleteByQuery(array $params = [])
 	{
 		return $this->client->deleteByQuery($params);
@@ -83,11 +87,20 @@ class Client
 
 	/**
 	 * @param array $params
-	 * @return array
+	 * @return array|callable
 	 */
 	public function deleteIndex(array $params = [])
 	{
 		return $this->indices()->delete($params);
+	}
+
+	/**
+	 * @param array $params
+	 * @return array|callable
+	 */
+	public function bulk(array $params = [])
+	{
+		return $this->client->bulk($params);
 	}
 
 	/**
