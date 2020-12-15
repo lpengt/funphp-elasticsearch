@@ -2,9 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Funphp\Elasticsearch\Aggregation;
-
-use Funphp\Elasticsearch\Document\Builders\BaseBuilder;
+namespace Funphp\Elasticsearch\Document\Builders;
 
 class Aggregation extends BaseBuilder
 {
@@ -77,7 +75,7 @@ class Aggregation extends BaseBuilder
 	}
 
 	/**
-	 * @param $name
+	 * @param                    $name
 	 * @param AggregationBuilder $aggregation
 	 * @return $this
 	 */

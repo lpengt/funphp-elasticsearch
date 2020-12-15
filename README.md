@@ -22,12 +22,12 @@ namespace Start;
 use Funphp\Elasticsearch\Search\Searchable;
 
 Class User{
-   use Searchable;
+    use Searchable;
     
-   public function searchableIndex(): string
-	{
-		return 'index-user';
-	}
+    public function searchableIndex(): string
+    {
+        return 'index-user';
+    }
 }
 
 ```
@@ -192,6 +192,28 @@ self::documentQueryBuilder()
     你可以使用`source` 来指定查询的列
 
 对于分页查询,你可以使用`from`和`size`方法来实现.
+
+- `scroll` 深度分页
+
+```php
+self::documentScrollBuilder()
+    ->scroll('5m')
+    ->scrollId($scrollId)
+    ->search();
+```
+
+- `aggs` 聚合
+```php
+use Funphp\Elasticsearch\Document\Builders\Aggregation;
+
+self::documentQueryBuilder()
+    ->match('description', $description)
+    ->aggs(function (Aggregation $aggregation) {
+        $aggregation->count('count', 'id')
+            ->max('max', 'id')
+            ->sum('sum', 'price');
+    })->search();
+```
 
 ### 修改指定`id`文档的内容
 

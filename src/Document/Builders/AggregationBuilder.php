@@ -2,9 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Funphp\Elasticsearch\Aggregation;
-
-use Funphp\Elasticsearch\Document\Builders\BaseBuilder;
+namespace Funphp\Elasticsearch\Document\Builders;
 
 class AggregationBuilder extends BaseBuilder
 {
