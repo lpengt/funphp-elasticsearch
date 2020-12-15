@@ -29,7 +29,8 @@ class Parser extends BaseParser
 			$this->parseSort(),
 			$this->parseSource(),
 			$this->parseFrom(),
-			$this->parseSize()
+			$this->parseSize(),
+			$this->parseAggs()
 		);
 	}
 
@@ -82,6 +83,16 @@ class Parser extends BaseParser
 		return $this->request->scroll ? [
 			'scroll' => $this->request->scroll ?? '1m',
 		] : [];
+	}
+
+	/**
+	 * @return array|array[]
+	 */
+	protected function parseAggs()
+	{
+		$aggs = $this->builder->getAggs();
+
+		return $aggs ? $aggs->format() : [];
 	}
 
 }
