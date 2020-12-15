@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Common\Settings;
 
-use Funphp\Elasticsearch\Builder\BuilderInterface;
+use Funphp\Elasticsearch\Document\Builders\BuilderInterface;
 
 class Settings implements BuilderInterface
 {

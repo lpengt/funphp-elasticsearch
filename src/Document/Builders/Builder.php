@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Funphp\Elasticsearch\Document\Builders;
 
 use Closure;
+use Funphp\Elasticsearch\Document\Builders\Aggregation;
 
 class Builder
 {
@@ -24,6 +25,11 @@ class Builder
 	 * @var SourceBuilder $source
 	 */
 	protected $source = ['*'];
+
+	/**
+	 * @var Aggregation $aggs
+	 */
+	protected $aggs;
 
 	/**
 	 * @param Closure $closure
@@ -66,6 +72,25 @@ class Builder
 		$this->source = new SourceBuilder($fields);
 
 		return $this;
+	}
+
+	/**
+	 * @param callable $callable
+	 * @return $this
+	 */
+	public function aggs(callable $callable): self
+	{
+		$this->aggs = tap(new Aggregation(), $callable);
+
+		return $this;
+	}
+
+	/**
+	 * @return Aggregation|null
+	 */
+	public function getAggs(): ?Aggregation
+	{
+		return $this->aggs;
 	}
 
 	/**

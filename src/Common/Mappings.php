@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Common;
 
-
-use Funphp\Elasticsearch\Builder\BuilderInterface;
+use Funphp\Elasticsearch\Document\Builders\BuilderInterface;
 
 class Mappings implements BuilderInterface
 {
@@ -36,7 +36,7 @@ class Mappings implements BuilderInterface
 	}
 
 
-	public function format()
+	public function format(): array
 	{
 		if (!$this->mappings) {
 			return [];

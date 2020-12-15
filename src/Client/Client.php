@@ -35,6 +35,15 @@ class Client
 	 * @param array $params
 	 * @return array|callable
 	 */
+	public function scroll(array $params = [])
+	{
+		return $this->client->scroll($params);
+	}
+
+	/**
+	 * @param array $params
+	 * @return array|callable
+	 */
 	public function create(array $params = [])
 	{
 		return $this->client->index($params);

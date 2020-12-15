@@ -10,6 +10,8 @@ use Funphp\Elasticsearch\Document\Create\Request as DocumentCreateRequest;
 use Funphp\Elasticsearch\Document\Delete\Request as DeleteRequest;
 use Funphp\Elasticsearch\Document\Query\Parser as QueryParser;
 use Funphp\Elasticsearch\Document\Query\Request as QueryRequest;
+use Funphp\Elasticsearch\Document\Scroll\Parser as ScrollParser;
+use Funphp\Elasticsearch\Document\Scroll\Request as ScrollRequest;
 use Funphp\Elasticsearch\Document\Update\Parser as UpdateParser;
 use Funphp\Elasticsearch\Document\Update\Request as UpdateRequest;
 use Funphp\Elasticsearch\Document\UpdateByQuery\Parser as UpdateByQueryParser;
@@ -81,6 +83,22 @@ trait RequestTrait
 	{
 		return (new QueryRequest($this->newClient(), new QueryParser()))
 			->index($this->searchableIndex());
+	}
+
+	/**
+	 * @return ScrollRequest
+	 */
+	public static function documentScrollBuilder(): ScrollRequest
+	{
+		return (new static)->newDocumentScrollRequest();
+	}
+
+	/**
+	 * @return ScrollRequest
+	 */
+	public function newDocumentScrollRequest(): ScrollRequest
+	{
+		return (new ScrollRequest($this->newClient(), new ScrollParser()));
 	}
 
 	/**
