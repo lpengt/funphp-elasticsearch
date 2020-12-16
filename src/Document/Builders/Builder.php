@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Funphp\Elasticsearch\Document\Builders;
 
 use Closure;
-use Funphp\Elasticsearch\Document\Builders\Aggregation;
+use Funphp\Elasticsearch\Document\Builders\Sort\SortByScriptBuilder;
 
 class Builder
 {
@@ -51,6 +51,17 @@ class Builder
 	public function sortBy(string $column, $order = 'asc'): self
 	{
 		$this->sorts[] = new SortBuilder($column, $order);
+		return $this;
+	}
+
+	/**
+	 * @param SortByScriptBuilder $sortByScript
+	 * @return $this
+	 */
+	public function sortByScript(SortByScriptBuilder $sortByScript): self
+	{
+		$this->sorts[] = $sortByScript;
+
 		return $this;
 	}
 

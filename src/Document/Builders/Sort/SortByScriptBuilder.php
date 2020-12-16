@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Document\Builders\Sort;
 
-use PhpParser\Node\Expr\Closure;
+use Funphp\Elasticsearch\Document\Builders\BaseBuilder;
 
 /**
  */
-class SortByScript extends BaseBuilder
+class SortByScriptBuilder extends BaseBuilder
 {
 	protected $apiName = '_script';
 
@@ -35,12 +35,12 @@ class SortByScript extends BaseBuilder
 	}
 
 	/**
-	 * @param Closure $closure
+	 * @param Script $script
 	 * @return $this
 	 */
-	public function addScript(Closure $closure): SortByScript
+	public function addScript(Script $script): SortByScriptBuilder
 	{
-		$this->script = tap(new Script(), $closure);
+		$this->script = $script;
 
 		return $this;
 	}
@@ -52,9 +52,9 @@ class SortByScript extends BaseBuilder
 	{
 		return [
 			$this->apiName => [
-				'type'  => $this->type,
-				'order' => $this->order,
-				'script' = $this->script->format(),
+				'type'   => $this->type,
+				'order'  => $this->order,
+				'script' => $this->script->format(),
 			],
 		];
 	}
