@@ -191,7 +191,7 @@ self::documentQueryBuilder()
 - `source`
     你可以使用`source` 来指定查询的列
 
-对于分页查询,你可以使用`from`和`size`方法来实现.
+    对于分页查询,你可以使用`from`和`size`方法来实现.
 
 - `scroll` 深度分页
 
@@ -200,6 +200,17 @@ self::documentScrollBuilder()
     ->scroll('5m')
     ->scrollId($scrollId)
     ->search();
+```
+
+- `count` 数量查询
+```php
+self::documentQueryBuilder()
+    ->bool(function (BoolBuilder $builder) {
+        $builder->mustNot(function (Builder $builder) {
+            $builder->exists('login_at');
+        });
+    })
+    ->count();
 ```
 
 - `aggs` 聚合
