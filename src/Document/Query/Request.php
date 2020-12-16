@@ -51,4 +51,12 @@ class Request extends BaseRequest
 		return $this->client->search($this->parser->parse($this));
 	}
 
+	/**
+	 * @return array|callable
+	 */
+	public function count()
+	{
+		return $this->client->count($this->parser->parse($this));
+	}
+
 }

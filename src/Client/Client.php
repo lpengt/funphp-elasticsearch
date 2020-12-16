@@ -35,6 +35,15 @@ class Client
 	 * @param array $params
 	 * @return array|callable
 	 */
+	public function count(array $params = [])
+	{
+		return $this->client->count($params);
+	}
+
+	/**
+	 * @param array $params
+	 * @return array|callable
+	 */
 	public function scroll(array $params = [])
 	{
 		return $this->client->scroll($params);
