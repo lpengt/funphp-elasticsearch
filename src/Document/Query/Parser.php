@@ -55,12 +55,12 @@ class Parser extends BaseParser
 	protected function parseSource(): array
 	{
 		$source = $this->builder->getSource();
-		if ($source instanceof SourceBuilder) {
-			$source = $source->format();
+		if (!$source instanceof SourceBuilder) {
+			return [];
 		}
 
 		return [
-			'_source' => $source,
+			'_source' => $source->format(),
 		];
 	}
 
@@ -73,9 +73,9 @@ class Parser extends BaseParser
 
 	protected function parseSize(): array
 	{
-		return [
-			'size' => $this->request->size ?? 10,
-		];
+		return $this->request->size ? [
+			'size' => $this->request->size,
+		] : [];
 	}
 
 	protected function parseScroll()
