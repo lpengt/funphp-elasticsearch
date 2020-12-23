@@ -42,6 +42,18 @@ class Builder
 		return $this;
 	}
 
+    /**
+     * @param string  $field
+     * @param Closure $closure
+     * @return $this
+     */
+	public function range(string $field, Closure $closure): self
+    {
+        $this->builders[] = tap(new RangeBuilder($field), $closure);
+
+        return $this;
+    }
+
 
 	/**
 	 * @param        $column

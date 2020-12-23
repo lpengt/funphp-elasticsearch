@@ -8,63 +8,62 @@ class RangeBuilder extends BaseBuilder
 {
 	protected $apiName = 'range';
 
-	protected $operator;
+    /**
+     * @var array $operators
+     */
+	protected $operators = [];
 
-	public const OPERATOR_GT  = 'gt';
-	public const OPERATOR_GTE = 'gte';
-	public const OPERATOR_LT  = 'lt';
-	public const OPERATOR_LTE = 'lte';
-
-	/**
-	 * RangeBuilder constructor.
-	 * @param string $filed
-	 * @param string $operator
-	 * @param null   $value
-	 * @throws RangeOperatorInvalidException
-	 */
-	public function __construct(string $filed, string $operator = '', $value = null)
+    /**
+     * RangeBuilder constructor.
+     * @param string $filed
+     */
+	public function __construct(string $filed)
 	{
-		parent::__construct($filed, $value);
-		$this->operator = $this->parserOperator($operator);
+		parent::__construct($filed, null);
 	}
 
 	public function format(): array
 	{
 		return [
-			$this->filed => [
-				$this->operator => $this->value,
-			],
+			$this->filed => $this->operators,
 		];
 	}
 
-	/**
-	 * @param $operator
-	 * @return string
-	 * @throws RangeOperatorInvalidException
-	 */
-	private function parserOperator($operator): ?string
-	{
-		switch ($operator) {
-			case self::OPERATOR_LT:
-			case '<':
-				return self::OPERATOR_LT;
-				break;
-			case self::OPERATOR_LTE:
-			case '<=':
-				return self::OPERATOR_LTE;
-				break;
-			case self::OPERATOR_GT:
-			case '>':
-				return self::OPERATOR_GT;
-				break;
-			case self::OPERATOR_GTE:
-			case '>=':
-				return self::OPERATOR_GTE;
-				break;
-			default:
-				throw new RangeOperatorInvalidException("Invalid range operator:['{$operator}']");
-				break;
-		}
-	}
+    public function lt($value): RangeBuilder
+    {
+        $this->operators['lt'] = $value;
+        return $this;
+    }
+
+    public function lte($value): RangeBuilder
+    {
+        $this->operators['lte'] = $value;
+        return $this;
+    }
+
+    public function gt($value): RangeBuilder
+    {
+        $this->operators['gt'] = $value;
+        return $this;
+    }
+
+    public function gte($value): RangeBuilder
+    {
+        $this->operators['gte'] = $value;
+
+        return $this;
+    }
+
+    public function from($value): RangeBuilder
+    {
+        $this->operators['from'] = $value;
+        return $this;
+    }
+
+    public function to($value): RangeBuilder
+    {
+        $this->operators['to'] = $value;
+        return $this;
+    }
 
 }
