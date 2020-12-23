@@ -9,7 +9,6 @@ namespace Funphp\Elasticsearch\Document\Builders;
  * @method Builder   exists($field)
  * @method Builder   ids(array $values)
  * @method Builder   match($field, $value)
- * @method Builder   range($field, $operator, $value)
  * @method Builder   term($field, $value)
  * @method Builder   termKeyword($field, $value)
  * @method Builder   terms($field, $value)
@@ -21,7 +20,6 @@ trait EnumerateBuilders
 		'exists'      => ExistsBuilder::class,
 		'ids'         => IdsBuilder::class,
 		'match'       => MatchBuilder::class,
-		'range'       => RangeBuilder::class,
 		'term'        => TermBuilder::class,
 		'termKeyword' => TermKeywordBuilder::class,
 		'terms'       => TermsBuilder::class,

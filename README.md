@@ -151,7 +151,9 @@ self::documentQueryBuilder()
 
 ```php
 self::documentQueryBuilder()
-    ->range('age', '>=', 12)
+    ->range('age', function(RangeBuilder $builder) {
+        $builder->gte(12);
+    })
     ->search();
 ```
 
@@ -162,10 +164,13 @@ self::documentQueryBuilder()
     self::documentQueryBuilder()
         ->bool(function (BoolBuilder $builder) {
             $builder->must(function (Builder $builder) {
-                $builder->range('login_at', '>=', '2020-10-01 00:00:00');
+                $builder->range('login_at', function (RangeBuilder $builder) {
+                   $builder->gte('2020-10-01 00:00:00');
+                });
             })->must(function (Builder $builder) {
-                $builder->range('age', '>=', 12)
-                    ->range('age', '<=', 15);
+                $builder->range('age', function (RangeBuilder $builder) {
+                   $builder->gte('12')->lte(15);
+                });
             });
         })
         ->sortByDesc('age')
